@@ -5,14 +5,15 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { DatabaseProviderService } from '../services/database-provider.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { AddTaskModalComponent } from '../components/add-task-modal/add-task-modal.component';
-import { TaskDetailModalComponent } from '../components/task-detail-modal/task-detail-modal.component';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, DragDropModule } from '@angular/cdk/drag-drop';
+import { EditTaskModalComponent } from '../components/edit-task-modal/edit-task-modal.component';
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.page.html',
   styleUrls: ['./tasks.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, AddTaskModalComponent, TaskDetailModalComponent]
+  imports: [IonicModule, CommonModule, FormsModule, DragDropModule]
 })
 export class TasksPage implements OnInit {
   selectedSegment: string = 'new';
@@ -41,6 +42,7 @@ export class TasksPage implements OnInit {
   async openAddTaskModal() {
     const modal = await this.modalController.create({
       component: AddTaskModalComponent,
+      cssClass: 'modal-border-radius'
     });
     modal.present();
 
@@ -87,8 +89,7 @@ export class TasksPage implements OnInit {
     });
   }
 
-  async updateTaskStatus(task: any) {
-    const newStatus = task.status === 'completed' ? 'new' : 'completed';
+  async updateTaskStatus(task: any, newStatus: string) {
     await this.databaseProviderService.databaseService.updateTask(
       task.id,
       task.title,
@@ -101,6 +102,32 @@ export class TasksPage implements OnInit {
     this.loadTasks();
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+      // Update the status of the dropped task
+      const droppedTask: any = event.container.data[event.currentIndex];
+      let newStatus: string;
+      if (event.container.id === 'newTasksList') {
+        newStatus = 'new';
+      } else if (event.container.id === 'inProgressTasksList') {
+        newStatus = 'in-progress';
+      } else if (event.container.id === 'completedTasksList') {
+        newStatus = 'completed';
+      } else {
+        newStatus = droppedTask.status; // Fallback
+      }
+      this.updateTaskStatus(droppedTask, newStatus);
+    }
+  }
+
   async deleteTask(id: number) {
     await this.databaseProviderService.databaseService.deleteTask(id);
     await LocalNotifications.cancel({ notifications: [{ id: id }] });
@@ -109,8 +136,9 @@ export class TasksPage implements OnInit {
 
   async editTask(task: any) {
     const modal = await this.modalController.create({
-      component: TaskDetailModalComponent,
-      componentProps: { task: task }
+      component: EditTaskModalComponent,
+      componentProps: { task: task },
+      cssClass: 'modal-border-radius'
     });
     modal.present();
 

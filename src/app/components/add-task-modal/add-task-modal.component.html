@@ -1,9 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Add New Task</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-button (click)="closeModal()">
         <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="addTask()" color="success" [disabled]="!title || !description">
+        <ion-icon name="save-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -15,24 +19,43 @@
       <ion-input label="Title" label-placement="floating" fill="outline" [(ngModel)]="title"></ion-input>
     </ion-item>
     <ion-item lines="none">
-      <ion-textarea label="Description" label-placement="floating" fill="outline" [(ngModel)]="description"></ion-textarea>
+      <ion-textarea label="Description" label-placement="floating" fill="outline"
+        [(ngModel)]="description"></ion-textarea>
     </ion-item>
     <ion-item lines="none">
-      <ion-datetime-button datetime="dueDate"></ion-datetime-button>
-      <ion-popover keep-contents-width="true" trigger="dueDate" trigger-action="click">
-        <ion-datetime id="dueDate" presentation="date" [(ngModel)]="dueDate"></ion-datetime>
-      </ion-popover>
+      <ion-label>Due Date</ion-label>
+      <div>
+        <ion-datetime-button datetime="dueDate"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true" style="border-radius: 16px; --border-radius: 16px;">
+          <ng-template>
+            <ion-datetime id="dueDate" presentation="date" [(ngModel)]="dueDate"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
     </ion-item>
+
     <ion-item lines="none">
+      <ion-label>Reminder</ion-label>
+      <div>
+        <ion-datetime-button datetime="reminderTime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true" style="border-radius: 16px; --border-radius: 16px;">
+          <ng-template>
+            <ion-datetime id="reminderTime" presentation="time" [(ngModel)]="reminderTime"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+    </ion-item>
+    <!-- <ion-item lines="none">
       <ion-datetime-button datetime="reminderTime"></ion-datetime-button>
       <ion-popover keep-contents-width="true" trigger="reminderTime" trigger="reminderTime" trigger-action="click">
         <ion-datetime id="reminderTime" presentation="time" [(ngModel)]="reminderTime"></ion-datetime>
       </ion-popover>
-    </ion-item>
+    </ion-item> -->
     <ion-item lines="none">
       <ion-button expand="block" (click)="selectImage()">Select Image</ion-button>
-      <img *ngIf="image" [src]="image" style="width: 100px; height: 100px; object-fit: cover; margin-top: 10px;">
     </ion-item>
   </ion-list>
-  <ion-button expand="block" (click)="addTask()">Add Task</ion-button>
+  <div *ngIf="image">
+    <img [src]="image" style="width: 100%; object-fit: contain; max-height: 200px;">
+  </div>
 </ion-content>

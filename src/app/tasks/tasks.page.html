@@ -1,15 +1,18 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      <img src="assets/img/logo.png" alt="COPOS Notes Logo" style="height: 3rem; vertical-align: middle;">
+      <img src="assets/img/logo.png" alt="COPOS Notes Logo" class="logo">
     </ion-title>
+    <ion-button fill="clear" slot="end" color="dark" size="large" (click)="openAddTaskModal()">
+      <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <img src="assets/img/logo.png" alt="COPOS Notes Logo" style="height: 3rem; vertical-align: middle;">
+      <img src="assets/img/logo.png" alt="COPOS Notes Logo" class="logo">
     </ion-toolbar>
   </ion-header>
 
@@ -21,23 +24,27 @@
           <ion-icon name="checkbox-outline" size="large" color="medium"></ion-icon>
           <p>No new tasks.</p>
         </div>
-        <ion-list *ngIf="newTasks.length > 0">
-          <ion-item-sliding *ngFor="let task of newTasks">
-            <ion-item class="task-item">
-              <ion-checkbox slot="start" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)" [checked]="task.status === 'completed'"></ion-checkbox>
-              <ion-label>
-                <h2>{{ task.title }}</h2>
-                <p>{{ task.description }}</p>
-                <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
-                <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-              <ion-item-option color="primary" (click)="editTask(task)">Edit</ion-item-option>
-              <ion-item-option color="danger" (click)="deleteTask(task.id)">Delete</ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
+        <div cdkDropList [cdkDropListData]="newTasks" (cdkDropListDropped)="drop($event)" class="task-list" id="newTasksList" [cdkDropListConnectedTo]="['inProgressTasksList', 'completedTasksList']">
+          <ion-card *ngFor="let task of newTasks" cdkDrag class="task-card">
+            <img *ngIf="task.image" [src]="task.image" class="task-image">
+            <ion-card-header>
+              <ion-card-title>{{ task.title }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>{{ task.description }}</p>
+              <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
+              <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
+              <ion-row class="ion-justify-content-end">
+                <ion-button fill="clear" (click)="editTask(task)">
+                  <ion-icon name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" color="danger" (click)="deleteTask(task.id)">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </div>
 
       <div class="task-column">
@@ -46,23 +53,27 @@
           <ion-icon name="hourglass-outline" size="large" color="medium"></ion-icon>
           <p>No tasks in progress.</p>
         </div>
-        <ion-list *ngIf="inProgressTasks.length > 0">
-          <ion-item-sliding *ngFor="let task of inProgressTasks">
-            <ion-item class="task-item">
-              <ion-checkbox slot="start" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)" [checked]="task.status === 'completed'"></ion-checkbox>
-              <ion-label>
-                <h2>{{ task.title }}</h2>
-                <p>{{ task.description }}</p>
-                <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
-                <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-              <ion-item-option color="primary" (click)="editTask(task)">Edit</ion-item-option>
-              <ion-item-option color="danger" (click)="deleteTask(task.id)">Delete</ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
+        <div cdkDropList [cdkDropListData]="inProgressTasks" (cdkDropListDropped)="drop($event)" class="task-list" id="inProgressTasksList" [cdkDropListConnectedTo]="['newTasksList', 'completedTasksList']">
+          <ion-card *ngFor="let task of inProgressTasks" cdkDrag class="task-card">
+            <img *ngIf="task.image" [src]="task.image" class="task-image">
+            <ion-card-header>
+              <ion-card-title>{{ task.title }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>{{ task.description }}</p>
+              <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
+              <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
+              <ion-row class="ion-justify-content-end">
+                <ion-button fill="clear" (click)="editTask(task)">
+                  <ion-icon name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" color="danger" (click)="deleteTask(task.id)">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </div>
 
       <div class="task-column">
@@ -71,30 +82,28 @@
           <ion-icon name="checkmark-done-outline" size="large" color="medium"></ion-icon>
           <p>No completed tasks.</p>
         </div>
-        <ion-list *ngIf="completedTasks.length > 0">
-          <ion-item-sliding *ngFor="let task of completedTasks">
-            <ion-item class="task-item">
-              <ion-checkbox slot="start" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)" [checked]="task.status === 'completed'"></ion-checkbox>
-              <ion-label>
-                <h2>{{ task.title }}</h2>
-                <p>{{ task.description }}</p>
-                <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
-                <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
-              </ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-              <ion-item-option color="primary" (click)="editTask(task)">Edit</ion-item-option>
-              <ion-item-option color="danger" (click)="deleteTask(task.id)">Delete</ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
+        <div cdkDropList [cdkDropListData]="completedTasks" (cdkDropListDropped)="drop($event)" class="task-list" id="completedTasksList" [cdkDropListConnectedTo]="['newTasksList', 'inProgressTasksList']">
+          <ion-card *ngFor="let task of completedTasks" cdkDrag class="task-card">
+            <img *ngIf="task.image" [src]="task.image" class="task-image">
+            <ion-card-header>
+              <ion-card-title>{{ task.title }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>{{ task.description }}</p>
+              <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
+              <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
+              <ion-row class="ion-justify-content-end">
+                <ion-button fill="clear" (click)="editTask(task)">
+                  <ion-icon name="create-outline"></ion-icon>
+                </ion-button>
+                <ion-button fill="clear" color="danger" (click)="deleteTask(task.id)">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </div>
     </div>
-
   </div>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="openAddTaskModal()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

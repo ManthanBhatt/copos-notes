@@ -1,9 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Edit Task</ion-title>
-    <ion-buttons slot="end">
+    <ion-buttons slot="start">
       <ion-button (click)="closeModal()">
         <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveChanges()" color="success" [disabled]="!editedTitle || !editedDescription">
+        <ion-icon name="save-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -15,22 +19,35 @@
       <ion-input label="Title" label-placement="floating" fill="outline" [(ngModel)]="editedTitle"></ion-input>
     </ion-item>
     <ion-item lines="none">
-      <ion-textarea label="Description" label-placement="floating" fill="outline" [(ngModel)]="editedDescription"></ion-textarea>
+      <ion-textarea label="Description" label-placement="floating" fill="outline"
+        [(ngModel)]="editedDescription"></ion-textarea>
     </ion-item>
     <ion-item lines="none">
-      <ion-datetime-button datetime="editDueDate"></ion-datetime-button>
-      <ion-popover keep-contents-width="true" trigger="editDueDate" trigger-action="click">
-        <ion-datetime id="editDueDate" presentation="date" [(ngModel)]="editedDueDate"></ion-datetime>
-      </ion-popover>
+      <ion-label>Due Date</ion-label>
+      <div>
+        <ion-datetime-button datetime="editedDueDate"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true" style="border-radius: 16px; --border-radius: 16px;">
+          <ng-template>
+            <ion-datetime id="editedDueDate" presentation="date" [(ngModel)]="editedDueDate"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
     </ion-item>
+
     <ion-item lines="none">
-      <ion-datetime-button datetime="editReminderTime"></ion-datetime-button>
-      <ion-popover keep-contents-width="true" trigger="editReminderTime" trigger-action="click">
-        <ion-datetime id="editReminderTime" presentation="time" [(ngModel)]="editedReminderTime"></ion-datetime>
-      </ion-popover>
+      <ion-label>Reminder</ion-label>
+      <div>
+        <ion-datetime-button datetime="editedReminderTime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true" style="border-radius: 16px; --border-radius: 16px;">
+          <ng-template>
+            <ion-datetime id="editedReminderTime" presentation="time" [(ngModel)]="editedReminderTime"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
     </ion-item>
+
     <ion-item lines="none">
-      <ion-select label="Status" label-placement="floating" fill="outline" [(ngModel)]="editedStatus">
+      <ion-select label="Status" label-placement="floating" fill="outline" [(ngModel)]="editedStatus" interface="popover">
         <ion-select-option value="new">New</ion-select-option>
         <ion-select-option value="in-progress">In Progress</ion-select-option>
         <ion-select-option value="completed">Completed</ion-select-option>
@@ -38,8 +55,9 @@
     </ion-item>
     <ion-item lines="none">
       <ion-button expand="block" (click)="selectImage()">Select Image</ion-button>
-      <img *ngIf="editedImage" [src]="editedImage" style="width: 100px; height: 100px; object-fit: cover; margin-top: 10px;">
     </ion-item>
   </ion-list>
-  <ion-button expand="block" (click)="saveChanges()">Save Changes</ion-button>
+  <div *ngIf="editedImage">
+    <img [src]="editedImage" style="width: 100%; object-fit: contain; max-height: 200px;">
+  </div>
 </ion-content>

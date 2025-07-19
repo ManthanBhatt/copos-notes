@@ -50,6 +50,10 @@ ion-input {
     margin-top: 4px;
 }
 
+ion-select {
+    margin-top: 4px;
+}
+
 ion-textarea {
     margin-top: 4px;
 }
@@ -83,4 +87,9 @@ ion-textarea {
 
 ion-button {
     text-transform: capitalize;
+}
+
+.logo {
+    height: 3rem;
+    vertical-align: middle;
 }

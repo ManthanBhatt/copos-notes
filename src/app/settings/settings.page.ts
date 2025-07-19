@@ -185,7 +185,9 @@ export class SettingsPage implements OnInit {
   }
 
   toggleTheme() {
-    this.appComponent.toggleTheme(!this.appComponent.darkMode);
+    setTimeout(() => {
+      this.appComponent.toggleTheme(this.appComponent.darkMode);
+    }, 500);
   }
 
   toggleEditMode() {

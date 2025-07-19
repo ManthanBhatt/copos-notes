@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      <img src="assets/img/logo.png" alt="COPOS Notes Logo" style="height: 3rem; vertical-align: middle;">
+      <img src="assets/img/logo.png" alt="COPOS Notes Logo" class="logo">
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +10,7 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">
-        <img src="assets/img/logo.png" alt="COPOS Notes Logo" style="height: 3rem; vertical-align: middle;">
+        <img src="assets/img/logo.png" alt="COPOS Notes Logo" class="logo">
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -37,12 +37,12 @@
             <ion-input label="Email" label-placement="floating" fill="outline" type="email"
               [(ngModel)]="userEmail"></ion-input>
           </ion-item>
-          <ion-button expand="block" color="secondary" fill="clear" (click)="openPinModal()">
+          <ion-button color="secondary" fill="clear" (click)="openPinModal()" class="ion-float-start">
             <ion-icon *ngIf="!hasPinConfigured" slot="start" name="settings-outline"></ion-icon>
             <ion-icon *ngIf="hasPinConfigured" slot="start" name="lock-closed-outline"></ion-icon>
             {{ hasPinConfigured ? 'Change PIN' : 'Set PIN' }}
           </ion-button>
-          <ion-button expand="block" color="success" (click)="saveProfile()">
+          <ion-button color="success" shape="round" (click)="saveProfile()" class="ion-float-end">
             <ion-icon name="save-outline" slot="start"></ion-icon>
             Save Profile
           </ion-button>
@@ -58,12 +58,12 @@
             <img *ngIf="userProfilePicture" [src]="userProfilePicture" class="profile-picture">
             <p><strong>Name:</strong> {{ userName }}</p>
             <p><strong>Email:</strong> {{ userEmail }}</p>
-            <ion-button expand="block" color="secondary" (click)="openPinModal()">
+            <ion-button color="secondary" fill="clear" (click)="openPinModal()">
               <ion-icon *ngIf="!hasPinConfigured" slot="start" name="settings-outline"></ion-icon>
               <ion-icon *ngIf="hasPinConfigured" slot="start" name="lock-closed-outline"></ion-icon>
               {{ hasPinConfigured ? 'Change PIN' : 'Set PIN' }}
             </ion-button>
-            <ion-button expand="block" (click)="toggleEditMode()">
+            <ion-button fill="clear" (click)="toggleEditMode()">
               <ion-icon name="create-outline" slot="start"></ion-icon>
               Edit Profile
             </ion-button>
@@ -71,11 +71,11 @@
         </ion-card>
       </div>
 
-      <ion-list class="theme-toggle-section">
+      <!-- <ion-list class="theme-toggle-section">
         <ion-item>
           <ion-toggle [(ngModel)]="appComponent.darkMode" (ionChange)="toggleTheme()">Dark Mode</ion-toggle>
         </ion-item>
-      </ion-list>
+      </ion-list> -->
     </div>
   </div>
 </ion-content>

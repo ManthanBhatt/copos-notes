@@ -43,6 +43,7 @@ export class SecretNotesPage implements OnInit {
   async openPinAuthenticationModal() {
     const modal = await this.modalController.create({
       component: PinInputModalComponent,
+      cssClass: 'modal-border-radius',
       componentProps: { title: 'Enter PIN to access Secret Notes' }
     });
     modal.present();
@@ -77,6 +78,7 @@ export class SecretNotesPage implements OnInit {
   async openAddSecretNoteModal() {
     const modal = await this.modalController.create({
       component: AddSecretNoteModalComponent,
+      cssClass: 'modal-border-radius'
     });
     modal.present();
 
@@ -106,7 +108,8 @@ export class SecretNotesPage implements OnInit {
   async editSecretNote(note: any) {
     const modal = await this.modalController.create({
       component: EditSecretNoteModalComponent,
-      componentProps: { note: note }
+      componentProps: { note: note },
+      cssClass: 'modal-border-radius'
     });
     modal.present();
 

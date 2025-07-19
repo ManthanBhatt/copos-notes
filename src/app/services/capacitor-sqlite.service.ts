@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CapacitorSQLite, SQLiteDBConnection, SQLiteConnection, DBSQLiteValues } from '@capacitor-community/sqlite';
 import { IDatabaseService } from './database.interface';
-
+import * as bcrypt from 'bcryptjs';
 @Injectable({
   providedIn: 'root'
 })
 export class CapacitorSqliteService implements IDatabaseService {
   private db: SQLiteDBConnection | null = null;
   private sqlite: SQLiteConnection = new SQLiteConnection(CapacitorSQLite);
+  private saltRounds = 10;  // Cost factor; you can adjust according to performance/security balance
 
   constructor() { }
 
@@ -113,15 +114,16 @@ export class CapacitorSqliteService implements IDatabaseService {
     return data.split('').map((char) => String.fromCharCode(char.charCodeAt(0) ^ 123)).join('');
   }
 
-  // Placeholder for PIN hashing
-  private hashPin(pin: string): string {
-    // WARNING: This is a simple placeholder for PIN hashing.
-    // For a production application, use a robust hashing algorithm like bcrypt.
-    return btoa(pin); // Base64 encode as a very basic "hash"
+  // Hash the PIN securely with bcrypt
+  private async hashPin(pin: string): Promise<string> {
+    const salt = await bcrypt.genSalt(this.saltRounds);
+    const hashedPin = await bcrypt.hash(pin, salt);
+    return hashedPin;
   }
 
-  private verifyPin(pin: string, hashedPin: string): boolean {
-    return btoa(pin) === hashedPin;
+  // Verify the PIN against the stored hashed PIN
+  private async verifyPin(pin: string, hashedPin: string): Promise<boolean> {
+    return await bcrypt.compare(pin, hashedPin);
   }
 
   // CRUD operations for notes

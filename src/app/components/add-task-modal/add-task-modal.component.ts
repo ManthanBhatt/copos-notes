@@ -14,13 +14,34 @@ import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 export class AddTaskModalComponent implements OnInit {
   title: string = '';
   description: string = '';
-  dueDate: string = '';
-  reminderTime: string = '';
+  dueDate: string = this.getCurrentDateYMD();
+  reminderTime: string = this.getCurrentTimeHMS();
   image: string = '';
 
   constructor(private modalController: ModalController) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.dueDate = this.getCurrentDateYMD();
+    this.reminderTime = `${this.dueDate}T${this.getCurrentTimeHMS()}`;
+  }
+
+  private getCurrentDateYMD(): string {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(now.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  private getCurrentTimeHMS(): string {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    return `${hours}:${minutes}:${seconds}`;
+  }
 
   async addTask() {
     this.modalController.dismiss({
