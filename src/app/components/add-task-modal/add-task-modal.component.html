@@ -29,6 +29,10 @@
         <ion-datetime id="reminderTime" presentation="time" [(ngModel)]="reminderTime"></ion-datetime>
       </ion-popover>
     </ion-item>
+    <ion-item lines="none">
+      <ion-button expand="block" (click)="selectImage()">Select Image</ion-button>
+      <img *ngIf="image" [src]="image" style="width: 100px; height: 100px; object-fit: cover; margin-top: 10px;">
+    </ion-item>
   </ion-list>
   <ion-button expand="block" (click)="addTask()">Add Task</ion-button>
 </ion-content>

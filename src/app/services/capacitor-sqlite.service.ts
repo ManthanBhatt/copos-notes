@@ -68,6 +68,7 @@ export class CapacitorSqliteService implements IDatabaseService {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT,
+        image TEXT,
         status TEXT DEFAULT 'new',
         due_date INTEGER,
         reminder_time INTEGER,
@@ -186,11 +187,11 @@ export class CapacitorSqliteService implements IDatabaseService {
   }
 
   // CRUD operations for tasks
-  async addTask(title: string, description: string, status: string = 'new', dueDate?: number, reminderTime?: number): Promise<number> {
+  async addTask(title: string, description: string, image: string, status: string = 'new', dueDate?: number, reminderTime?: number): Promise<number> {
     if (!this.db) throw new Error('Database not initialized.');
     const now = Date.now();
-    const query = `INSERT INTO tasks (title, description, status, due_date, reminder_time, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?);`;
-    const res = await this.db.run(query, [title, description, status, dueDate || null, reminderTime || null, now, now]);
+    const query = `INSERT INTO tasks (title, description, image, status, due_date, reminder_time, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
+    const res = await this.db.run(query, [title, description, image, status, dueDate || null, reminderTime || null, now, now]);
     return res.changes?.lastId || -1;
   }
 
@@ -201,11 +202,11 @@ export class CapacitorSqliteService implements IDatabaseService {
     return res.values || [];
   }
 
-  async updateTask(id: number, title: string, description: string, status: string, dueDate?: number, reminderTime?: number): Promise<number> {
+  async updateTask(id: number, title: string, description: string, image: string, status: string, dueDate?: number, reminderTime?: number): Promise<number> {
     if (!this.db) throw new Error('Database not initialized.');
     const now = Date.now();
-    const query = `UPDATE tasks SET title = ?, description = ?, status = ?, due_date = ?, reminder_time = ?, updated_at = ? WHERE id = ?;`;
-    const res = await this.db.run(query, [title, description, status, dueDate || null, reminderTime || null, now, id]);
+    const query = `UPDATE tasks SET title = ?, description = ?, image = ?, status = ?, due_date = ?, reminder_time = ?, updated_at = ? WHERE id = ?;`;
+    const res = await this.db.run(query, [title, description, image, status, dueDate || null, reminderTime || null, now, id]);
     return res.changes?.changes || 0;
   }
 

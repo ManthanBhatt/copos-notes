@@ -5,13 +5,14 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { DatabaseProviderService } from '../services/database-provider.service';
 import { AddNoteModalComponent } from '../components/add-note-modal/add-note-modal.component';
 import { EditNoteModalComponent } from '../components/edit-note-modal/edit-note-modal.component';
+import { NoteCardComponent } from '../components/note-card/note-card.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, AddNoteModalComponent, EditNoteModalComponent]
+  imports: [IonicModule, CommonModule, FormsModule, AddNoteModalComponent, EditNoteModalComponent, NoteCardComponent]
 })
 export class HomePage implements OnInit {
   notes: any[] = [];

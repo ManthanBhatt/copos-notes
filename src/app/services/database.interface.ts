@@ -13,9 +13,9 @@ export interface IDatabaseService {
   deleteSecretNote(id: number): Promise<number>;
 
   // Tasks CRUD
-  addTask(title: string, description: string, status?: string, dueDate?: number, reminderTime?: number): Promise<number>;
+  addTask(title: string, description: string, image: string, status?: string, dueDate?: number, reminderTime?: number): Promise<number>;
   getTasks(): Promise<any[]>;
-  updateTask(id: number, title: string, description: string, status: string, dueDate?: number, reminderTime?: number): Promise<number>;
+  updateTask(id: number, title: string, description: string, status: string, image: string, dueDate?: number, reminderTime?: number): Promise<number>;
   deleteTask(id: number): Promise<number>;
 
   // User Settings

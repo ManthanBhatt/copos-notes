@@ -23,17 +23,13 @@
         </div>
         <ion-list *ngIf="newTasks.length > 0">
           <ion-item-sliding *ngFor="let task of newTasks">
-            <ion-item>
+            <ion-item class="task-item">
+              <ion-checkbox slot="start" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)" [checked]="task.status === 'completed'"></ion-checkbox>
               <ion-label>
                 <h2>{{ task.title }}</h2>
                 <p>{{ task.description }}</p>
                 <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
                 <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
-                <ion-select label="Status" label-placement="floating" fill="outline" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)">
-                  <ion-select-option value="new">New</ion-select-option>
-                  <ion-select-option value="in-progress">In Progress</ion-select-option>
-                  <ion-select-option value="completed">Completed</ion-select-option>
-                </ion-select>
               </ion-label>
             </ion-item>
             <ion-item-options side="end">
@@ -52,17 +48,13 @@
         </div>
         <ion-list *ngIf="inProgressTasks.length > 0">
           <ion-item-sliding *ngFor="let task of inProgressTasks">
-            <ion-item>
+            <ion-item class="task-item">
+              <ion-checkbox slot="start" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)" [checked]="task.status === 'completed'"></ion-checkbox>
               <ion-label>
                 <h2>{{ task.title }}</h2>
                 <p>{{ task.description }}</p>
                 <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
                 <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
-                <ion-select label="Status" label-placement="floating" fill="outline" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)">
-                  <ion-select-option value="new">New</ion-select-option>
-                  <ion-select-option value="in-progress">In Progress</ion-select-option>
-                  <ion-select-option value="completed">Completed</ion-select-option>
-                </ion-select>
               </ion-label>
             </ion-item>
             <ion-item-options side="end">
@@ -81,17 +73,13 @@
         </div>
         <ion-list *ngIf="completedTasks.length > 0">
           <ion-item-sliding *ngFor="let task of completedTasks">
-            <ion-item>
+            <ion-item class="task-item">
+              <ion-checkbox slot="start" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)" [checked]="task.status === 'completed'"></ion-checkbox>
               <ion-label>
                 <h2>{{ task.title }}</h2>
                 <p>{{ task.description }}</p>
                 <p *ngIf="task.due_date">Due: {{ task.due_date | date:'shortDate' }}</p>
                 <p *ngIf="task.reminder_time">Reminder: {{ task.reminder_time | date:'shortTime' }}</p>
-                <ion-select label="Status" label-placement="floating" fill="outline" [(ngModel)]="task.status" (ionChange)="updateTaskStatus(task)">
-                  <ion-select-option value="new">New</ion-select-option>
-                  <ion-select-option value="in-progress">In Progress</ion-select-option>
-                  <ion-select-option value="completed">Completed</ion-select-option>
-                </ion-select>
               </ion-label>
             </ion-item>
             <ion-item-options side="end">

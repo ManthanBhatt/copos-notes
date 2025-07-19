@@ -1,0 +1,17 @@
+<ion-card class="note-card">
+  <img *ngIf="note.image" [src]="note.image" class="note-image">
+  <ion-card-header>
+    <ion-card-title>{{ note.title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <p>{{ note.content }}</p>
+    <ion-row class="ion-justify-content-end">
+      <ion-button fill="clear" (click)="onEdit()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" color="danger" (click)="onDelete()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

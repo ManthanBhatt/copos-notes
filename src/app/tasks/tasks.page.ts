@@ -57,6 +57,7 @@ export class TasksPage implements OnInit {
       const taskId = await this.databaseProviderService.databaseService.addTask(
         data.task.title,
         data.task.description,
+        data.task.image,
         'new',
         dueDateTimestamp,
         reminderTimeTimestamp
@@ -87,11 +88,13 @@ export class TasksPage implements OnInit {
   }
 
   async updateTaskStatus(task: any) {
+    const newStatus = task.status === 'completed' ? 'new' : 'completed';
     await this.databaseProviderService.databaseService.updateTask(
       task.id,
       task.title,
       task.description,
-      task.status,
+      newStatus,
+      task.image,
       task.due_date,
       task.reminder_time
     );
@@ -123,6 +126,7 @@ export class TasksPage implements OnInit {
         data.task.title,
         data.task.description,
         data.task.status,
+        data.task.image,
         data.task.due_date,
         data.task.reminder_time
       );

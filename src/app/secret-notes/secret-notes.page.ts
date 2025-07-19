@@ -6,6 +6,7 @@ import { DatabaseProviderService } from '../services/database-provider.service';
 import { PinInputModalComponent } from '../components/pin-input-modal/pin-input-modal.component';
 import { AddSecretNoteModalComponent } from '../components/add-secret-note-modal/add-secret-note-modal.component';
 import { EditSecretNoteModalComponent } from '../components/edit-secret-note-modal/edit-secret-note-modal.component';
+import { NoteCardComponent } from '../components/note-card/note-card.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './secret-notes.page.html',
   styleUrls: ['./secret-notes.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, PinInputModalComponent, AddSecretNoteModalComponent, EditSecretNoteModalComponent]
+  imports: [IonicModule, CommonModule, FormsModule, PinInputModalComponent, AddSecretNoteModalComponent, EditSecretNoteModalComponent, NoteCardComponent]
 })
 export class SecretNotesPage implements OnInit {
   secretNotes: any[] = [];

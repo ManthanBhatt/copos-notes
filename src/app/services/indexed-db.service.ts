@@ -124,9 +124,9 @@ export class IndexedDbService implements IDatabaseService {
   }
 
   // Tasks CRUD
-  async addTask(title: string, description: string, status: string = 'new', dueDate?: number, reminderTime?: number): Promise<number> {
+  async addTask(title: string, description: string, image: string, status: string = 'new', dueDate?: number, reminderTime?: number): Promise<number> {
     const now = Date.now();
-    const task = { id: now, title, description, status, due_date: dueDate, reminder_time: reminderTime, created_at: now, updated_at: now };
+    const task = { id: now, title, description, image, status, due_date: dueDate, reminder_time: reminderTime, created_at: now, updated_at: now };
     await this.tasksStore.setItem(String(now), task);
     return now;
   }
@@ -139,10 +139,10 @@ export class IndexedDbService implements IDatabaseService {
     return tasks.sort((a, b) => b.updated_at - a.updated_at);
   }
 
-  async updateTask(id: number, title: string, description: string, status: string, dueDate?: number, reminderTime?: number): Promise<number> {
+  async updateTask(id: number, title: string, description: string, status: string, image: string, dueDate?: number, reminderTime?: number): Promise<number> {
     const task = await this.tasksStore.getItem(String(id));
     if (task) {
-      const updatedTask = { ...task, title, description, status, due_date: dueDate, reminder_time: reminderTime, updated_at: Date.now() };
+      const updatedTask = { ...task, title, description, image, status, due_date: dueDate, reminder_time: reminderTime, updated_at: Date.now() };
       await this.tasksStore.setItem(String(id), updatedTask);
       return 1;
     }
