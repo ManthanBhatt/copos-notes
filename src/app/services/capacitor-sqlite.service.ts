@@ -57,7 +57,9 @@ export class CapacitorSqliteService implements IDatabaseService {
     const createSecretNotesTable = `
       CREATE TABLE IF NOT EXISTS secret_notes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT,
         encrypted_content TEXT NOT NULL,
+        image TEXT,
         created_at INTEGER NOT NULL,
         updated_at INTEGER NOT NULL
       );
@@ -154,12 +156,12 @@ export class CapacitorSqliteService implements IDatabaseService {
   }
 
   // CRUD operations for secret notes
-  async addSecretNote(content: string): Promise<number> {
+  async addSecretNote(title: string, content: string, image: string): Promise<number> {
     if (!this.db) throw new Error('Database not initialized.');
     const now = Date.now();
     const encryptedContent = this.encrypt(content);
-    const query = `INSERT INTO secret_notes (encrypted_content, created_at, updated_at) VALUES (?, ?, ?);`;
-    const res = await this.db.run(query, [encryptedContent, now, now]);
+    const query = `INSERT INTO secret_notes (title, encrypted_content, image, created_at, updated_at) VALUES (?, ?, ?, ?, ?);`;
+    const res = await this.db.run(query, [title, encryptedContent, image, now, now]);
     return res.changes?.lastId || -1;
   }
 
@@ -170,12 +172,12 @@ export class CapacitorSqliteService implements IDatabaseService {
     return res.values ? res.values.map(note => ({ ...note, content: this.decrypt(note.encrypted_content) })) : [];
   }
 
-  async updateSecretNote(id: number, content: string): Promise<number> {
+  async updateSecretNote(id: number, title: string, content: string, image: string): Promise<number> {
     if (!this.db) throw new Error('Database not initialized.');
     const now = Date.now();
     const encryptedContent = this.encrypt(content);
-    const query = `UPDATE secret_notes SET encrypted_content = ?, updated_at = ? WHERE id = ?;`;
-    const res = await this.db.run(query, [encryptedContent, now, id]);
+    const query = `UPDATE secret_notes SET title = ?, encrypted_content = ?, image = ?, updated_at = ? WHERE id = ?;`;
+    const res = await this.db.run(query, [title, encryptedContent, image, now, id]);
     return res.changes?.changes || 0;
   }
 

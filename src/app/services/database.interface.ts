@@ -7,9 +7,9 @@ export interface IDatabaseService {
   deleteNote(id: number): Promise<number>;
 
   // Secret Notes CRUD
-  addSecretNote(content: string): Promise<number>;
+  addSecretNote(title: string, content: string, image: string): Promise<number>;
   getSecretNotes(): Promise<any[]>;
-  updateSecretNote(id: number, content: string): Promise<number>;
+  updateSecretNote(id: number, title: string, content: string, image: string): Promise<number>;
   deleteSecretNote(id: number): Promise<number>;
 
   // Tasks CRUD

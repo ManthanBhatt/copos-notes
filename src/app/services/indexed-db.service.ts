@@ -91,10 +91,10 @@ export class IndexedDbService implements IDatabaseService {
   }
 
   // Secret Notes CRUD
-  async addSecretNote(content: string): Promise<number> {
+  async addSecretNote(title: string, content: string, image: string): Promise<number> {
     const now = Date.now();
     const encryptedContent = this.encrypt(content);
-    const secretNote = { id: now, encrypted_content: encryptedContent, created_at: now, updated_at: now };
+    const secretNote = { id: now, title, encrypted_content: encryptedContent, image, created_at: now, updated_at: now };
     await this.secretNotesStore.setItem(String(now), secretNote);
     return now;
   }
@@ -107,11 +107,11 @@ export class IndexedDbService implements IDatabaseService {
     return secretNotes.sort((a, b) => b.updated_at - a.updated_at);
   }
 
-  async updateSecretNote(id: number, content: string): Promise<number> {
+  async updateSecretNote(id: number, title: string, content: string, image: string): Promise<number> {
     const secretNote = await this.secretNotesStore.getItem(String(id));
     if (secretNote) {
       const encryptedContent = this.encrypt(content);
-      const updatedSecretNote = { ...secretNote, encrypted_content: encryptedContent, updated_at: Date.now() };
+      const updatedSecretNote = { ...secretNote, title, encrypted_content: encryptedContent, image, updated_at: Date.now() };
       await this.secretNotesStore.setItem(String(id), updatedSecretNote);
       return 1;
     }

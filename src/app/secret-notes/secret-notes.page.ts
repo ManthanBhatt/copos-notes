@@ -87,7 +87,7 @@ export class SecretNotesPage implements OnInit {
     }
 
     if (data && data.note) {
-      await this.databaseProviderService.databaseService.addSecretNote(data.note.content);
+      await this.databaseProviderService.databaseService.addSecretNote(data.note.title, data.note.content, data.note.image);
       this.loadSecretNotes();
     }
   }
@@ -119,7 +119,9 @@ export class SecretNotesPage implements OnInit {
     if (data && data.note) {
       await this.databaseProviderService.databaseService.updateSecretNote(
         data.note.id,
-        data.note.content
+        data.note.title,
+        data.note.content,
+        data.note.image
       );
       this.loadSecretNotes();
     }
