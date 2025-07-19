@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="pin-display ion-text-center" style="font-size: 3rem;">
+    <ion-input type="password" [(ngModel)]="pin" readonly></ion-input>
+  </div>
+
+  <ion-grid class="keypad">
+    <ion-row>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(1)">1</ion-button></ion-col>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(2)">2</ion-button></ion-col>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(3)">3</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(4)">4</ion-button></ion-col>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(5)">5</ion-button></ion-col>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(6)">6</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(7)">7</ion-button></ion-col>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(8)">8</ion-button></ion-col>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(9)">9</ion-button></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col><ion-button expand="block" color="dark" shape="round" (click)="clearPin()">Clear</ion-button></ion-col>
+      <ion-col><ion-button expand="block" fill="clear" size="large" (click)="addNumber(0)">0</ion-button></ion-col>
+      <ion-col><ion-button expand="block" color="danger" shape="round" (click)="deleteLast()">Del</ion-button></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button expand="block" color="success" shape="round" (click)="confirm()" [disabled]="pin.length !== 6">Confirm</ion-button>
+</ion-content>

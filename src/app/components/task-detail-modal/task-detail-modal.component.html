@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Task Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item lines="none">
+      <ion-label position="stacked">Title</ion-label>
+      <ion-input [(ngModel)]="editedTitle" label-placement="floating" fill="outline"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Description</ion-label>
+      <ion-textarea [(ngModel)]="editedDescription" rows="3" label-placement="floating" fill="outline"></ion-textarea>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Status</ion-label>
+      <ion-select [(ngModel)]="editedStatus" label-placement="floating" fill="outline">
+        <ion-select-option value="new">New</ion-select-option>
+        <ion-select-option value="in-progress">In Progress</ion-select-option>
+        <ion-select-option value="completed">Completed</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Due Date</ion-label>
+      <ion-datetime-button datetime="editedDueDate"></ion-datetime-button>
+      <ion-popover keep-contents-width="true" trigger="editedDueDate" trigger-action="click">
+        <ion-datetime id="editedDueDate" presentation="date" [(ngModel)]="editedDueDate"></ion-datetime>
+      </ion-popover>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Reminder Time</ion-label>
+      <ion-datetime-button datetime="editedReminderTime"></ion-datetime-button>
+      <ion-popover keep-contents-width="true" trigger="editedReminderTime" trigger-action="click">
+        <ion-datetime id="editedReminderTime" presentation="time" [(ngModel)]="editedReminderTime"></ion-datetime>
+      </ion-popover>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" (click)="saveChanges()">Save Changes</ion-button>
+</ion-content>

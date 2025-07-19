@@ -1,0 +1,59 @@
+ion-content {
+  --padding-bottom: 80px; /* Add padding to ensure FAB is visible */
+}
+
+.task-board {
+  display: flex;
+  overflow-x: auto;
+  height: 100%;
+  padding: 10px;
+}
+
+.task-column {
+  flex: 0 0 300px; /* Fixed width for columns */
+  margin-right: 10px;
+  background-color: var(--ion-color-light-tint);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-column h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--ion-color-dark);
+}
+
+.task-column ion-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  background: transparent; /* Ensure list background is transparent */
+}
+
+.task-column ion-item {
+  margin-bottom: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --background: var(--ion-color-step-50);
+}
+
+.task-column ion-item-options {
+  border-radius: 8px;
+}
+
+/* Dark mode adjustments */
+body.dark {
+  .task-column {
+    background-color: var(--ion-color-dark-tint);
+  }
+
+  .task-column h3 {
+    color: var(--ion-color-light);
+  }
+
+  .task-column ion-item {
+    --background: var(--ion-color-step-850);
+  }
+}
