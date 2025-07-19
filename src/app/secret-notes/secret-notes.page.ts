@@ -5,6 +5,7 @@ import { IonicModule, AlertController, ModalController } from '@ionic/angular';
 import { DatabaseProviderService } from '../services/database-provider.service';
 import { PinInputModalComponent } from '../components/pin-input-modal/pin-input-modal.component';
 import { AddSecretNoteModalComponent } from '../components/add-secret-note-modal/add-secret-note-modal.component';
+import { EditSecretNoteModalComponent } from '../components/edit-secret-note-modal/edit-secret-note-modal.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './secret-notes.page.html',
   styleUrls: ['./secret-notes.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, PinInputModalComponent, AddSecretNoteModalComponent]
+  imports: [IonicModule, CommonModule, FormsModule, PinInputModalComponent, AddSecretNoteModalComponent, EditSecretNoteModalComponent]
 })
 export class SecretNotesPage implements OnInit {
   secretNotes: any[] = [];
@@ -28,6 +29,10 @@ export class SecretNotesPage implements OnInit {
     } else {
       this.isAuthenticated = false; // If no PIN is configured, user is not authenticated for secret notes
     }
+  }
+
+  ionViewWillEnter() {
+    this.checkPinStatus();
   }
 
   async checkPinStatus() {
@@ -97,9 +102,25 @@ export class SecretNotesPage implements OnInit {
     this.router.navigateByUrl('/settings');
   }
 
-  // Placeholder for edit functionality
-  editSecretNote(note: any) {
-    console.log('Edit secret note:', note);
-    // Implement navigation to an edit page or a modal
+  async editSecretNote(note: any) {
+    const modal = await this.modalController.create({
+      component: EditSecretNoteModalComponent,
+      componentProps: { note: note }
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'backdrop' || !data) {
+      return;
+    }
+
+    if (data && data.note) {
+      await this.databaseProviderService.databaseService.updateSecretNote(
+        data.note.id,
+        data.note.content
+      );
+      this.loadSecretNotes();
+    }
   }
 }

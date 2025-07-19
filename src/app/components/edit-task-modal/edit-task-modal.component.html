@@ -11,25 +11,25 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item>
+    <ion-item lines="none">
       <ion-input label="Title" label-placement="floating" fill="outline" [(ngModel)]="editedTitle"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <ion-textarea label="Description" label-placement="floating" fill="outline" [(ngModel)]="editedDescription"></ion-textarea>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <ion-datetime-button datetime="editDueDate"></ion-datetime-button>
       <ion-popover keep-contents-width="true" trigger="editDueDate" trigger-action="click">
         <ion-datetime id="editDueDate" presentation="date" [(ngModel)]="editedDueDate"></ion-datetime>
       </ion-popover>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <ion-datetime-button datetime="editReminderTime"></ion-datetime-button>
       <ion-popover keep-contents-width="true" trigger="editReminderTime" trigger-action="click">
         <ion-datetime id="editReminderTime" presentation="time" [(ngModel)]="editedReminderTime"></ion-datetime>
       </ion-popover>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <ion-select label="Status" label-placement="floating" fill="outline" [(ngModel)]="editedStatus">
         <ion-select-option value="new">New</ion-select-option>
         <ion-select-option value="in-progress">In Progress</ion-select-option>

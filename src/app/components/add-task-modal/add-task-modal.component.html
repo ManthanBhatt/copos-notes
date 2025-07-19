@@ -11,21 +11,21 @@
 
 <ion-content class="ion-padding">
   <ion-list>
-    <ion-item>
+    <ion-item lines="none">
       <ion-input label="Title" label-placement="floating" fill="outline" [(ngModel)]="title"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <ion-textarea label="Description" label-placement="floating" fill="outline" [(ngModel)]="description"></ion-textarea>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <ion-datetime-button datetime="dueDate"></ion-datetime-button>
       <ion-popover keep-contents-width="true" trigger="dueDate" trigger-action="click">
         <ion-datetime id="dueDate" presentation="date" [(ngModel)]="dueDate"></ion-datetime>
       </ion-popover>
     </ion-item>
-    <ion-item>
+    <ion-item lines="none">
       <ion-datetime-button datetime="reminderTime"></ion-datetime-button>
-      <ion-popover keep-contents-width="true" trigger="reminderTime" trigger-action="click">
+      <ion-popover keep-contents-width="true" trigger="reminderTime" trigger="reminderTime" trigger-action="click">
         <ion-datetime id="reminderTime" presentation="time" [(ngModel)]="reminderTime"></ion-datetime>
       </ion-popover>
     </ion-item>
