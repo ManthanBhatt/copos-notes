@@ -1,0 +1,7 @@
+{
+  "name": "COPOS Notes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
