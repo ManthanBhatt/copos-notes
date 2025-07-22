@@ -12,6 +12,11 @@ const config: CapacitorConfig = {
       smallIcon: 'res://ic_stat_icon_config',
       iconColor: '#488AFF',
       sound: 'res://bells'
+    },
+    StatusBar: {
+      overlaysWebView: false,
+      style: "DARK",
+      backgroundColor: "#ffffffff",
     }
   }
 };
