@@ -116,14 +116,14 @@ export class CapacitorSqliteService implements IDatabaseService {
 
   // Hash the PIN securely with bcrypt
   private async hashPin(pin: string): Promise<string> {
-    const salt = await bcrypt.genSalt(this.saltRounds);
-    const hashedPin = await bcrypt.hash(pin, salt);
-    return hashedPin;
+    // const salt = await bcrypt.genSalt(this.saltRounds);
+    // const hashedPin = await bcrypt.hash(pin, salt);
+    return btoa(pin);
   }
 
   // Verify the PIN against the stored hashed PIN
   private async verifyPin(pin: string, hashedPin: string): Promise<boolean> {
-    return await bcrypt.compare(pin, hashedPin);
+    return atob(pin) === hashedPin;
   }
 
   // CRUD operations for notes

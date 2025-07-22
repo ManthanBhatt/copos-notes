@@ -11,11 +11,11 @@ export class DatabaseProviderService {
   private _databaseService: IDatabaseService;
 
   constructor(private platform: Platform, private capacitorSqliteService: CapacitorSqliteService, private indexedDbService: IndexedDbService) {
-    if (this.platform.is('hybrid')) {
-      this._databaseService = this.capacitorSqliteService;
-    } else {
+    // if (this.platform.is('hybrid')) {
+    //   this._databaseService = this.capacitorSqliteService;
+    // } else {
       this._databaseService = this.indexedDbService;
-    }
+    // }
   }
 
   get databaseService(): IDatabaseService {

@@ -17,9 +17,11 @@
   </ion-header>
 
   <div id="container">
-    <div *ngIf="notes.length === 0" class="ion-text-center ion-padding">
-      <ion-icon name="document-text-outline" size="large" color="medium"></ion-icon>
-      <p>No notes yet. Tap the '+' button to add one!</p>
+    <div *ngIf="notes.length === 0" style="display: flex; justify-content: center; align-items: center; height: 80vh;">
+      <div class="ion-text-center ion-padding">
+        <ion-icon name="document-text-outline" size="large" color="medium"></ion-icon>
+        <p>No notes yet.</p>
+      </div>
     </div>
 
     <ion-grid *ngIf="notes.length > 0">

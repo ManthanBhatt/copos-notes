@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { DatabaseProviderService } from './services/database-provider.service';
+import { StatusBar } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,9 @@ export class AppComponent {
     this.platform.ready().then(async () => {
       await this.databaseProviderService.databaseService.initializePlugin();
       this.loadThemePreference();
+      StatusBar.setOverlaysWebView({
+        overlay: false
+      });
     });
   }
 

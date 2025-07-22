@@ -71,19 +71,19 @@ ion-textarea {
     --height: 100%;
 }
 
-.modal-border-radius {
-    --height: 65vh;
-    border-radius: 16px;
-    --border-radius: 16px;
-}
+// .modal-border-radius {
+//     --height: 65vh;
+//     border-radius: 16px;
+//     --border-radius: 16px;
+// }
 
-.pin-modal {
-    --box-shadow: 0;
-    --backdrop-opacity: 0.5 !important;
-    --height: 60vh;
-    border-radius: 16px;
-    --border-radius: 16px;
-}
+// .pin-modal {
+//     --box-shadow: 0;
+//     --backdrop-opacity: 0.5 !important;
+//     --height: 60vh;
+//     border-radius: 16px;
+//     --border-radius: 16px;
+// }
 
 ion-button {
     text-transform: capitalize;

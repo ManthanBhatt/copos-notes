@@ -12,7 +12,7 @@ import { AppComponent } from '../app.component';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, PinInputModalComponent]
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class SettingsPage implements OnInit {
   userName: string = '';

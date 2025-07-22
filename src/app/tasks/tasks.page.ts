@@ -28,6 +28,10 @@ export class TasksPage implements OnInit {
     this.loadTasks();
   }
 
+  ionViewWillEnter() {
+    this.loadTasks();
+  }
+
   async loadTasks() {
     this.tasks = await this.databaseProviderService.databaseService.getTasks();
     this.filterTasks();
@@ -65,10 +69,10 @@ export class TasksPage implements OnInit {
         reminderTimeTimestamp
       );
 
+      this.loadTasks();
       if (reminderTimeTimestamp && taskId !== -1) {
         await this.scheduleNotification(taskId, data.task.title, reminderTimeTimestamp);
       }
-      this.loadTasks();
     }
   }
 

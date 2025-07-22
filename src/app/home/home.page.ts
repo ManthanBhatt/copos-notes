@@ -12,7 +12,7 @@ import { NoteCardComponent } from '../components/note-card/note-card.component';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, AddNoteModalComponent, EditNoteModalComponent, NoteCardComponent]
+  imports: [IonicModule, CommonModule, FormsModule, NoteCardComponent]
 })
 export class HomePage implements OnInit {
   notes: any[] = [];

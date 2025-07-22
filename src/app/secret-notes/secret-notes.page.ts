@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './secret-notes.page.html',
   styleUrls: ['./secret-notes.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, PinInputModalComponent, AddSecretNoteModalComponent, EditSecretNoteModalComponent, NoteCardComponent]
+  imports: [IonicModule, CommonModule, FormsModule, NoteCardComponent]
 })
 export class SecretNotesPage implements OnInit {
   secretNotes: any[] = [];
@@ -23,17 +23,19 @@ export class SecretNotesPage implements OnInit {
 
   constructor(private databaseProviderService: DatabaseProviderService, private alertController: AlertController, private modalController: ModalController, private router: Router) { }
 
-  async ngOnInit() {
-    await this.checkPinStatus();
-    if (this.hasPinConfigured) {
-      await this.openPinAuthenticationModal();
-    } else {
-      this.isAuthenticated = false; // If no PIN is configured, user is not authenticated for secret notes
-    }
+  ngOnInit() {
+    
   }
 
   ionViewWillEnter() {
-    this.checkPinStatus();
+    this.isAuthenticated = false;
+    this.checkPinStatus().then(() => {
+      if (this.hasPinConfigured) {
+        this.openPinAuthenticationModal();
+      } else {
+        this.isAuthenticated = false; // If no PIN is configured, user is not authenticated for secret notes
+      }
+    })
   }
 
   async checkPinStatus() {
