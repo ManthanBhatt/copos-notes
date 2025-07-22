@@ -1,0 +1,3 @@
+keytool -genkey -v -keystore copos-notes.keystore -alias coposnotes -keyalg RSA -keysize 2048 -validity 10000
+
+copos-note-19-07-2025
