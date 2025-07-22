@@ -11,6 +11,10 @@ Copos Notes is a versatile note-taking application built with Ionic and Angular.
 *   **Offline Support:** Your data is stored locally, so you can access your notes and tasks even without an internet connection.
 *   **Dark Mode:** The application supports a dark theme and respects your device's color scheme preferences.
 
+## Demo
+
+You can try out the live demo of the application [here](https://vercel-copos-notes.vercel.app/home).
+
 ## Project Structure
 
 The project is organized as follows:
